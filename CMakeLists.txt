@@ -1,3 +1,27 @@
+IF(CROSS_COMPILE)
+    MESSAGE("use cross compile")
+    SET(CMAKE_SYSTEM_NAME Linux)
+    SET(TOOLCHAIN_DIR "/opt/FriendlyARM/toolchain/4.9.3")
+    #SET(CMAKE_FIND_ROOT_PATH  ${TOOLCHAIN_DIR}
+    #${TOOLCHAIN_DIR}/arm-cortexa9-linux-gnueabihf/include
+    #${TOOLCHAIN_DIR}/arm-cortexa9-linux-gnueabihf/lib )
+    set(CMAKE_CXX_COMPILER ${TOOLCHAIN_DIR}/bin/arm-linux-g++)
+    set(CMAKE_C_COMPILER   ${TOOLCHAIN_DIR}/bin/arm-linux-gcc)
+    include_directories(${TOOLCHAIN_DIR}/include)
+    link_directories(${TOOLCHAIN_DIR}/lib)
+    #SET(CMAKE_C_FLAGS_DEBUG "$ENV{CFLAGS} -std=gnu99 -g -ggdb -fno-strict-aliasing -Wno-pointer-sign -Wno-pointer-to-int-cast   -Ofast -flto -fuse-linker-plugin -ftree-loop-if-convert-stores")
+    #SET(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -std=c++11 -Wall -g -ggdb -mfpu=neon")
+    SET(CMAKE_C_FLAGS_DEBUG "$ENV{CFLAGS} -std=gnu99 -g -Wall")
+    SET(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -std=c++11 -Wall -g -mfpu=neon")
+ENDIF(CROSS_COMPILE)
+
+IF(CROSS64)
+MESSAGE("use arm64 cross compile")
+SET(CMAKE_SYSTEM_NAME Linux)
+set(CMAKE_C_COMPILER   aarch64-bionic-linux-gnu-gcc)
+set(CMAKE_CXX_COMPILER aarch64-bionic-linux-gnu-g++)
+SET(CMAKE_INSTALL_PREFIX "/usr/local/aarch64-linux-gnu")
+ENDIF(CROSS64)
 # CMake build script for ZeroMQ
 project(ZeroMQ)
 

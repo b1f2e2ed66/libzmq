@@ -20,10 +20,13 @@ MESSAGE("use arm64 cross compile")
 SET(CMAKE_SYSTEM_NAME Linux)
 set(CMAKE_C_COMPILER   aarch64-bionic-linux-gnu-gcc)
 set(CMAKE_CXX_COMPILER aarch64-bionic-linux-gnu-g++)
-SET(CMAKE_INSTALL_PREFIX "/usr/local/aarch64-linux-gnu")
 ENDIF(CROSS64)
 # CMake build script for ZeroMQ
 project(ZeroMQ)
+
+IF(CROSS64)
+SET(CMAKE_INSTALL_PREFIX "/usr/local/aarch64-linux-gnu")
+ENDIF(CROSS64)
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL Darwin)
   cmake_minimum_required(VERSION 3.0.2)
